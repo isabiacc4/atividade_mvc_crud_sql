@@ -5,6 +5,7 @@ const router = express.Router();
 // Importa o controlador de tarefas para lidar com as requisições relacionadas às tarefas
 const tarefaController = require("../controllers/tarefaController");
 
+
 // Rota para listar todas as tarefas
 router.get("/tarefas", tarefaController.listarTarefas);
 
