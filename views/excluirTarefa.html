@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <!-- Metadados -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Título da página -->
+    <link rel="stylesheet" href="/style.css" />
+
+    <title>Excluir cliente</title>
+  </head>
+  <body>
+    <!-- Título principal -->
+    <h1>Excluir cliente</h1>
+    <!-- Formulário para excluir uma tarefa -->
+    <form id="excluirForm">
+      <label for="clienteId">ID do cliente</label>
+      <!-- Campo de entrada para o ID da tarefa -->
+      <input type="number" id="clienteId" name="clienteId" required />
+      <!-- Botão para excluir a tarefa -->
+      <button type="button" onclick="excluirCliente()">Excluir</button>
+    </form>
+    <!-- Script JavaScript -->
+    <script>
+      // Função assíncrona para excluir uma tarefa
+      async function excluirCliente() {
+        // Obtém o ID da tarefa do campo de entrada
+        const clienteId = document.getElementById("clienteId").value;
+        try {
+          // Envia uma requisição DELETE para excluir a tarefa
+          const response = await fetch("/tarefas/" + clienteId, {
+            // Método HTTP DELETE
+            method: "DELETE",
+          });
+          // Verifica se a resposta da requisição é bem-sucedida
+          if (response.ok) {
+            // Exibe um alerta de sucesso
+            alert("Cliente excluído com sucesso!");
+            // Aqui você pode redirecionar para outra página ou fazer outra ação necessária a
+            // Redireciona para a página de listagem de tarefas
+            window.location.href = "/listar-tarefa";
+          } else {
+            // Lança um erro se houver problema ao excluir a tarefa
+            throw new Error("Erro ao excluir cliente");
+          }
+        } catch (error) {
+          // Registra o erro no console
+          console.error("Erro ao excluir cliente:", error);
+          // Exibe o erro em um alerta
+          alert(error.message);
+        }
+      }
+    </script>
+  </body>
+</html>

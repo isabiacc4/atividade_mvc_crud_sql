@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Metadados -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Título da página -->
+    <title>Listar Tarefas</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <!-- Título principal -->
+    <h1>Listar Clientes</h1>
+    <!-- Lista onde as tarefas serão inseridas via JavaScript -->
+    <ul id="tarefas-list" class="list">
+      <!-- Espaço reservado para as tarefas -->
+    </ul>
+    <!-- Lista de navegação -->
+    <ul>
+      <br>
+      <br>
+      <!-- Item de lista com link para retornar à página inicial -->
+      <li><a href="/" class="voltar">VOLTAR AO INÍCIO</a></li>
+    </ul>
+    <!-- Script JavaScript -->
+    <script>
+      // Função assíncrona para obter as tarefas do servidor e exibi-las na lista
+      async function listarTarefas() {
+        // Obtém as tarefas do servidor
+        const response = await fetch("/tarefas");
+        // Converte a resposta em formato JSON
+        const tarefas = await response.json();
+        // Obtém a lista de tarefas no DOM
+        const tarefasList = document.getElementById("tarefas-list");
+        // Limpa a lista de tarefas
+        tarefasList.innerHTML = "";
+        // Itera sobre cada tarefa
+        tarefas.forEach((tarefa) => {
+          // Cria um novo elemento de lista
+          const li = document.createElement("li");
+          // Define o texto do elemento
+          li.textContent = `ID: ${tarefa.cliente_id} | NOME: ${tarefa.nome} | IDADE: ${tarefa.idade} | SEXO: ${tarefa.sexo} | CIDADE: ${tarefa.cidade}` ;
+                             //mostrando o que vem do bd
+          // Adiciona o elemento à lista de tarefas
+          tarefasList.appendChild(li);
+        });
+      }
+      // Chama a função para listar as tarefas ao carregar a página
+      listarTarefas();
+    </script>
+  </body>
+</html>

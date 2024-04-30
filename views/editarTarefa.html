@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <!-- Meta tags -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Título da página -->
+    <title>Editar Tarefa</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <!-- Título principal -->
+    <h1>Editar Clientes</h1>
+    <!-- Formulário para buscar uma tarefa por ID -->
+    <form id="buscarForm">
+      <label for="clienteId">ID do Cliente:</label>
+      <input type="number" id="clienteId" name="clienteId" required />
+      <!-- Botão para buscar a tarefa -->
+      <button type="button" onclick="buscarTarefa()">Buscar</button>
+    </form>
+    <hr />
+    <!-- Título secundário -->
+    <h2>Detalhes do Cliente</h2>
+    <!-- Formulário para editar uma tarefa (inicialmente oculto) -->
+    <form id="editarForm" style="display: none">  
+
+      <label for="nome">Nome:</label>
+      <!-- Campo de entrada para a descrição da tarefa -->
+      <input type="text" id="nome" name="nome" required />
+
+      <label for="idade">Idade:</label>
+      <!-- Campo de entrada para a descrição da tarefa -->
+      <input type="number" id="idade" name="idade" required />
+
+      <label for="sexo">Sexo:</label>
+      <!-- Campo de entrada para a descrição da tarefa -->
+      <input type="text" id="sexo" name="sexo" required />
+
+      <label for="cidade">Cidade:</label>
+      <!-- Campo de entrada para a descrição da tarefa -->
+      <input type="text" id="cidade" name="cidade" required />
+
+      <!-- Botão para atualizar a tarefa -->
+      <button type="button" onclick="atualizarTarefa()">Atualizar</button>
+      <!-- Botão para cancelar a edição da tarefa -->
+      <button type="button" onclick="voltarInicio()">Cancelar</button>
+    </form>
+
+    <script>
+      // Função assíncrona para buscar uma tarefa por ID
+      async function buscarTarefa() {
+        // Obtém o ID da tarefa do campo de entrada
+        const clienteId = document.getElementById("clienteId").value;
+        // Envia uma requisição GET para obter os detalhes da tarefa
+        const response = await fetch(`/tarefas/${clienteId}`);
+        // Verifica se a resposta da requisição é bem-sucedida
+        if (response.ok) {
+          // Converte a resposta para JSON
+          const tarefa = await response.json();
+          // Preenche o campo de descrição com a descrição da tarefa
+          document.getElementById("nome").value = tarefa.nome;
+          document.getElementById("idade").value = tarefa.idade;
+          document.getElementById("sexo").value = tarefa.sexo;
+          document.getElementById("cidade").value = tarefa.cidade;
+          // Exibe o formulário de edição
+          document.getElementById("editarForm").style.display = "block";  //tira a regra de edição
+        } else {
+          // Exibe um alerta se a tarefa não for encontrada
+          alert("Cliente não encontrado.");
+        }
+      }
+
+      // Função assíncrona para atualizar uma tarefa
+      async function atualizarTarefa() {
+        // Obtém o ID da tarefa do campo de entrada
+        const clienteId = document.getElementById("clienteId").value;
+
+        // Obtém a nova descrição da tarefa
+        
+        const nome = document.getElementById("nome").value;
+        const idade= document.getElementById("idade").value;
+        const sexo = document.getElementById("sexo").value;
+        const cidade = document.getElementById("cidade").value;
+
+        const response = await fetch(`/tarefas/${clienteId}`, {
+          // Envia uma requisição PUT para atualizar a tarefa
+          method: "PUT", // Método HTTP PUT
+          headers: {
+            // Tipo de conteúdo JSON
+            "Content-Type": "application/json",
+          },
+          // Corpo da requisição contendo a nova descrição da tarefa
+          body: JSON.stringify({ nome, idade, sexo, cidade }),  //transforma em json
+        });
+        // Verifica se a resposta da requisição é bem-sucedida
+        if (response.ok) {
+          // Exibe um alerta de sucesso
+          alert("Dados do cliente atualizados com sucesso!");
+          // Redireciona para a página de listagem de tarefas
+          window.location.href = "/listar-tarefa";
+        } else {
+          alert("Erro ao atualizar dados do cliente.");
+        }
+        // Exibe um alerta se houver erro ao atualizar a tarefa
+      }
+      // Função para voltar à página inicial de listagem de tarefas
+      function voltarInicio() {
+        // Redireciona para a página de listagem de tarefas
+        window.location.href = "/tarefas";
+      }
+    </script>
+  </body>
+</html>

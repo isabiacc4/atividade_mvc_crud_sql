@@ -1,0 +1,54 @@
+body{
+    background-color: rgb(0, 57, 200);
+}
+h1{
+    color: aliceblue;
+    text-align: center;
+    background-color: rgb(68, 96, 255);
+    padding: 20px;
+
+
+}
+li, a, p, label, h2{
+    color: azure;
+}
+
+a{
+    text-decoration: none;
+}
+a:hover{
+    color: rgb(0, 119, 255);
+    background-color: rgb(169, 241, 255);
+    padding: 10px;
+}
+
+.list{
+    background-color: rgb(75, 162, 249);   
+    margin: 2% 15%;
+    align-items: center;
+    padding: 50px;
+    font-size: large;
+    box-shadow: 10px 10px 10px black;
+}
+
+.voltar{
+    background-color: rgb(170, 241, 255);
+    text-decoration: none;
+    list-style: none;
+    padding: 10px;
+    margin: 10px;
+    color: rgb(0, 83, 177);
+    border-radius: 10px;
+
+}
+
+.voltar:hover{
+    color: rgb(18, 128, 255);
+    background-color: rgb(105, 230, 255);
+    padding: 10px;
+}
+
+.botaoinicial{
+    background-color: rgb(0, 7, 143);
+
+}

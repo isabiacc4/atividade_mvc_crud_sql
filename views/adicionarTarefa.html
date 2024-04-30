@@ -1,0 +1,86 @@
+<!-- Declaração do tipo de documento e idioma -->
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <!-- Metadados do documento -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Título da página -->
+    <title>Adicionar Tarefa</title>
+    <!-- Link para o arquivo CSS de estilo -->
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <!-- Título principal da página -->
+    <h1>Adicionar Tarefa</h1>
+    <!-- Formulário para adicionar uma nova tarefa -->
+    <form id="formAdicionarTarefa">
+      <!-- Rótulo para o campo de entrada -->
+      <label for="nome">Nome:</label><br />
+      <!-- Campo de entrada para a descrição da tarefa -->
+      <input type="text" id="nome" name="nome" required /><br /><br />
+
+      <label for="idade">Idade:</label><br />
+      <!-- Campo de entrada para a descrição da tarefa -->
+      <input type="number" id="idade" name="idade" required /><br /><br />
+
+      <label for="sexo">Sexo:</label><br />
+      <!-- Campo de entrada para a descrição da tarefa -->
+      <input type="text" id="sexo" name="sexo" required /><br /><br />
+
+      <label for="descricao">Cidade:</label><br />
+      <!-- Campo de entrada para a descrição da tarefa -->
+      <input type="text" id="cidade" name="cidade" required /><br /><br /><br />
+
+      <!-- Botão para submeter o formulário -->
+      <button type="submit">Adicionar</button>
+    </form>
+    <br />
+    <br /><br />
+    <!-- Lista não ordenada -->
+    <ul>
+      <!-- Item de lista com link para voltar à página inicial -->
+      <li><a href="/" class="voltar">VOLTAR AO INÍCIO</a></li>
+    </ul>
+    <!-- Script JavaScript -->
+    <script>
+      // Função para enviar os dados do formulário para adicionar uma nova tarefa
+      async function adicionarTarefa(event) {
+        // Previne o comportamento padrão de submissão do formulário
+        event.preventDefault();
+
+        // Obtém a descrição da tarefa do campo de entrada
+        const nome = document.getElementById("nome").value;
+        const idade = document.getElementById("idade").value;
+        const sexo = document.getElementById("sexo").value;
+        const cidade = document.getElementById("cidade").value;
+
+        try {
+          // Envia uma requisição POST para a rota "/tarefas" com os dados da nova tarefa em
+          const response = await fetch("/tarefas", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          body: JSON.stringify({ nome, idade, sexo, cidade }), // Converte os dados para JSON
+          });
+          // Verifica se a requisição foi bem-sucedida
+          if (response.ok) {
+            // Exibe um alerta de sucesso
+            alert("Cliente adicionado com sucesso!");
+            // Redireciona para a página de adicionar tarefa
+            window.location.href = "/tarefas/adicionar";
+          } else {
+            console.error("Erro ao adicionar cliente:", response.statusText);
+          }
+        } catch (error) {
+          console.error("Erro ao adicionar cliente:", error);
+        }
+      }
+      // Adiciona um evento de submissão ao formulário
+      document
+        .getElementById("formAdicionarTarefa")
+        .addEventListener("submit", adicionarTarefa);
+    </script>
+  </body>
+</html>
